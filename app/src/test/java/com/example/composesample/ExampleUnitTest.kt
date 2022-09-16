@@ -14,4 +14,16 @@ class ExampleUnitTest {
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
     }
+
+    @Test
+    fun recursion(){
+        println(countNumber(10))
+    }
+
+    private fun countNumber(int: Int): Int {
+        if (int==1){
+            return 1
+        }
+        return countNumber(int-1)
+    }
 }
