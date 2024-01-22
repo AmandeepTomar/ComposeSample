@@ -1,5 +1,6 @@
 package com.example.composesample
 
+import android.annotation.SuppressLint
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
@@ -45,10 +46,15 @@ import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.rememberNavController
 import com.example.composesample.basicslayouts.AlignYourBodyUI
 import com.example.composesample.basicslayouts.SearchBarUI
+import com.example.composesample.bottomnav.BottomNavItem
+import com.example.composesample.bottomnav.BottomNavigationBar
+import com.example.composesample.bottomnav.Navigation
 import com.example.composesample.datasource.Message
 import com.example.composesample.datasource.SampleDataSource
+import com.example.composesample.multipleselectorrlazyColumn.MultiSelectLazyColumn
 import com.example.composesample.ui.theme.ComposeSampleTheme
 import com.example.composesample.viewmodel.MainViewModel
 import java.util.*
@@ -56,13 +62,34 @@ import kotlin.reflect.KProperty
 
 class MainActivity : ComponentActivity() {
     private val mainViewModel: MainViewModel by viewModels()
+
+    @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainViewModel.updateName("First Value of Name")
         setContent {
             MaterialTheme {
                 // A surface container using the 'background' color from the theme
-                AppSample()
+                // AppSample()
+
+                MultiSelectLazyColumn()
+
+//                val navController = rememberNavController()
+//                Scaffold(
+//
+//                    bottomBar = {
+//                        BottomNavigationBar(
+//                            items = BottomNavItem.getItems(),
+//                            navController = navController,
+//                            modifier = Modifier,
+//                            onBottomItemClick = {
+//                                navController.navigate(it.route)
+//                            }
+//                        )
+//                    }
+//                ) {
+//                    Navigation(navController = navController)
+//                }
             }
         }
     }
@@ -206,8 +233,8 @@ fun designBottomNavigation(modifier: Modifier) {
     }
 }
 
-    @Composable
-    fun AppSample() {
+@Composable
+fun AppSample() {
 //    val searchBarUI = SearchBarUI()
 //    searchBarUI.searchBarUI(modifier = Modifier.padding(all = 8.dp))
 
@@ -219,20 +246,20 @@ fun designBottomNavigation(modifier: Modifier) {
 //        name = name,
 //        R.drawable.ab1_inversions
 //    )
-        //withSurfaceExample(drawable = R.drawable.fc2_nature_meditations, modifier =Modifier.padding(all=8.dp),R.string.app_name )
-        Scaffold(bottomBar = {
-            designBottomNavigation(modifier = Modifier)
-        }) {
-            homeScreen()
-        }
+    //withSurfaceExample(drawable = R.drawable.fc2_nature_meditations, modifier =Modifier.padding(all=8.dp),R.string.app_name )
+    Scaffold(bottomBar = {
+        designBottomNavigation(modifier = Modifier)
+    }) {
+        homeScreen()
     }
+}
 
-    @Preview(showBackground = true, widthDp = 320,  uiMode = UI_MODE_NIGHT_NO)
-    @Preview(showBackground = true, widthDp = 320,  uiMode = UI_MODE_NIGHT_YES)
-    @Composable
-    fun DefaultPreview() {
-        ComposeSampleTheme {
-            //  Conversations(messages = SampleDataSource.getConversations())
-            AppSample()
-        }
+@Preview(showBackground = true, widthDp = 320, uiMode = UI_MODE_NIGHT_NO)
+@Preview(showBackground = true, widthDp = 320, uiMode = UI_MODE_NIGHT_YES)
+@Composable
+fun DefaultPreview() {
+    ComposeSampleTheme {
+        //  Conversations(messages = SampleDataSource.getConversations())
+        AppSample()
     }
+}
